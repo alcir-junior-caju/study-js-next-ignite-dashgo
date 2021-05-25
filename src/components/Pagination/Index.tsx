@@ -1,4 +1,12 @@
 import { Box, Button, HStack, Text } from "@chakra-ui/react";
+import PaginationItem from "./PaginationItem";
+
+const dataPagination = [
+  { number: 1, isCurrent: true},
+  { number: 2, isCurrent: false},
+  { number: 3, isCurrent: false},
+  { number: 4, isCurrent: false},
+];
 
 const Pagination = () => {
   return (
@@ -8,26 +16,9 @@ const Pagination = () => {
       </Box>
 
       <HStack spacing={2}>
-        <Button
-          size="sm"
-          fontSize="xs"
-          width={4}
-          colorScheme="pink"
-          disabled
-        >
-          1
-        </Button>
-        <Button
-          size="sm"
-          fontSize="xs"
-          width={4}
-          bg="gray.700"
-          _hover={{
-            bg: 'gray.500'
-          }}
-        >
-          2
-        </Button>
+        {dataPagination.map(page => (
+          <PaginationItem number={page.number} isCurrent={page.isCurrent} />
+        ))}
       </HStack>
     </HStack>
   );
