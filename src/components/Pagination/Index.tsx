@@ -17,7 +17,7 @@ const Pagination = () => {
 
       <HStack spacing={2}>
         {dataPagination.map(page => (
-          <PaginationItem number={page.number} isCurrent={page.isCurrent} />
+          <PaginationItem number={page.number} isCurrent={page.isCurrent} key={page.number} />
         ))}
       </HStack>
     </HStack>
