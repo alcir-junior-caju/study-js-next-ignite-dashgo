@@ -11,12 +11,14 @@ const dataMenu = [
       {
         id: 1,
         icon: RiDashboardLine,
-        name: 'Dashboard'
+        name: 'Dashboard',
+        href: '/dashboard'
       },
       {
         id: 2,
         icon: RiContactsLine,
-        name: 'Usuários'
+        name: 'Usuários',
+        href: '/users'
       }
     ]
   },
@@ -27,12 +29,14 @@ const dataMenu = [
       {
         id: 1,
         icon: RiInputMethodLine,
-        name: 'Formulários'
+        name: 'Formulários',
+        href: '/forms'
       },
       {
         id: 2,
         icon: RiGitMergeLine,
-        name: 'Automação'
+        name: 'Automação',
+        href: '/automation'
       }
     ]
   }

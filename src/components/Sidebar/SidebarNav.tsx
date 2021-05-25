@@ -7,6 +7,7 @@ type menus = {
   id: number;
   icon: ElementType;
   name: string;
+  href: string;
 };
 
 type dataMenu = {
@@ -25,7 +26,7 @@ const SidebarNav = ({ dataMenu }: SidebarProps) => {
       {dataMenu.map(section => (
         <NavSection title={section.label} key={section.id}>
           {section.menus.map(menu => (
-            <NavLink icon={menu.icon} key={menu.id}>{menu.name}</NavLink>
+            <NavLink href={menu.href} icon={menu.icon} key={menu.id}>{menu.name}</NavLink>
           ))}
         </NavSection>
       ))}
