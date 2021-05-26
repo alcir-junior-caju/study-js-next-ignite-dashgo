@@ -1,13 +1,13 @@
 import { Box, Button, Checkbox, Flex, Heading, Icon, Spinner, Table, Tbody, Td, Text, Th, Thead, Tr, useBreakpointValue } from "@chakra-ui/react";
 import Link from 'next/link';
 import { useQuery } from 'react-query';
-import { RiAddLine, RiPencilLine } from "react-icons/ri";
+import { RiAddLine, RiPencilLine, RiRefreshLine } from "react-icons/ri";
 import Header from "../../components/Header/Index";
 import Pagination from "../../components/Pagination/Index";
 import Sidebar from "../../components/Sidebar/Index";
 
 const UsersList = () => {
-  const { data, isLoading, error } = useQuery('users', async () => {
+  const { data, isLoading, isFetching, error, refetch } = useQuery('users', async () => {
     const response = await fetch('http://localhost:3000/api/users');
     const data = await response.json();
 
@@ -43,19 +43,36 @@ const UsersList = () => {
 
         <Box flex={1} borderRadius={8} bg="gray.800" p={8}>
           <Flex mb={8} justify="space-between" align="center">
-            <Heading size="lg" fontWeight="normal" >Usuários</Heading>
+            <Heading size="lg" fontWeight="normal">
+              Usuários
+              {!isLoading && isFetching && <Spinner size="sm" color="gray.500" ml={4} />}
+            </Heading>
 
-            <Link href="/users/create" passHref>
+            <Box>
               <Button
-                as="a"
                 size="sm"
                 fontSize="sm"
-                colorScheme="pink"
-                leftIcon={<Icon as={RiAddLine} fontSize={20} />}
+                colorScheme="purple"
+                leftIcon={<Icon as={RiRefreshLine} fontSize={20} />}
+                mr={2}
+                onClick={() => refetch()}
               >
-                Novo usuário
+                Atualizar
               </Button>
-            </Link>
+
+              <Link href="/users/create" passHref>
+
+                <Button
+                  as="a"
+                  size="sm"
+                  fontSize="sm"
+                  colorScheme="pink"
+                  leftIcon={<Icon as={RiAddLine} fontSize={20} />}
+                >
+                  Novo usuário
+                </Button>
+              </Link>
+            </Box>
           </Flex>
 
           {isLoading ? (
