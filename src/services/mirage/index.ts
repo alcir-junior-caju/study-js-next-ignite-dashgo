@@ -36,6 +36,7 @@ export function makeServer() {
     },
 
     routes() {
+      this.passthrough('http://localhost:3333/**');
       this.namespace = 'api';
       this.timing = 750;
 

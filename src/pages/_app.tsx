@@ -6,20 +6,23 @@ import { SidebarDrawerProvider } from "../context/SidebarDrawerContext";
 import { makeServer } from "../services/mirage";
 import { theme } from "../styles/theme";
 import { queryClient } from "../services/queryClient";
+import { AuthProvider } from "../context/AuthContext";
 
 if (process.env.NODE_ENV === 'development') makeServer();
 
 const MyApp = ({ Component, pageProps }: AppProps) => {
   return (
-    <QueryClientProvider client={queryClient}>
-      <ChakraProvider theme={theme}>
-        <SidebarDrawerProvider>
-          <Component {...pageProps} />
-        </SidebarDrawerProvider>
-      </ChakraProvider>
+    <AuthProvider>
+      <QueryClientProvider client={queryClient}>
+        <ChakraProvider theme={theme}>
+          <SidebarDrawerProvider>
+            <Component {...pageProps} />
+          </SidebarDrawerProvider>
+        </ChakraProvider>
 
-      <ReactQueryDevtools />
-    </QueryClientProvider>
+        <ReactQueryDevtools />
+      </QueryClientProvider>
+    </AuthProvider>
   );
 }
 
