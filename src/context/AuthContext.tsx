@@ -1,6 +1,7 @@
 import { createContext, ReactNode, useContext, useEffect, useState } from "react";
 import Router from 'next/router'
 import { parseCookies, setCookie } from 'nookies';
+import { api } from "../services/api";
 
 type SignInCredentials = {
   email: string;
@@ -33,36 +34,22 @@ export function AuthProvider({ children }: AuthProviderProps) {
     const { 'goDash.token': token } = parseCookies();
 
     if (token) {
-      fetch('http://localhost:3333/me', {
-        headers: new Headers({
-          'Authorization': `Bearer ${token}`
-        })
-      })
-        .then(response => response.json())
-        .then(data => {
-          const { email, permissions, roles } = data;
-          setUser({
-            email,
-            permissions,
-            roles
-          });
-        });
+      api.get('/me').then(response => {
+        const { email, permissions, roles } = response.data;
+
+        setUser({ email, permissions, roles });
+      });
     }
   }, []);
 
   const signIn = async ({ email, password }: SignInCredentials) => {
     try {
-      const response = await fetch('http://localhost:3333/sessions', {
-        method: 'POST',
-        body: JSON.stringify({ email, password }),
-        headers: {"Content-type": "application/json; charset=UTF-8"}
+      const response = await api.post('/sessions', {
+        email,
+        password
       });
-      const {
-        permissions,
-        roles,
-        token,
-        refreshToken
-      } = await response.json();
+
+      const { token, refreshToken, permissions, roles } = response.data;
 
       setCookie(undefined, 'goDash.token', token, {
         maxAge: 60 * 60 * 24 * 30, // 30 days
@@ -78,6 +65,8 @@ export function AuthProvider({ children }: AuthProviderProps) {
         permissions,
         roles
       });
+
+      api.defaults.headers['Authorization'] = `Bearer ${token}`;
 
       if (isAuthenticated) Router.push('/dashboard');
 
