@@ -1,6 +1,6 @@
 import { createContext, ReactNode, useContext, useEffect, useState } from "react";
 import Router from 'next/router'
-import { parseCookies, setCookie } from 'nookies';
+import { destroyCookie, parseCookies, setCookie } from 'nookies';
 import { api } from "../services/api";
 
 type SignInCredentials = {
@@ -20,8 +20,16 @@ type User = {
 
 interface AuthContextData {
   signIn(credentials: SignInCredentials): Promise<void>;
+  signOut(): void;
   isAuthenticated: boolean;
   user: User;
+};
+
+export const signOut = () => {
+  destroyCookie(undefined, 'goDash.token');
+  destroyCookie(undefined, 'goDash.refreshToken');
+
+  Router.push('/');
 };
 
 const AuthContext = createContext({} as AuthContextData);
@@ -34,11 +42,15 @@ export function AuthProvider({ children }: AuthProviderProps) {
     const { 'goDash.token': token } = parseCookies();
 
     if (token) {
-      api.get('/me').then(response => {
-        const { email, permissions, roles } = response.data;
+      api.get('/me')
+        .then(response => {
+          const { email, permissions, roles } = response.data;
 
-        setUser({ email, permissions, roles });
-      });
+          setUser({ email, permissions, roles });
+        })
+        .catch(() => {
+          signOut();
+        });
     }
   }, []);
 
@@ -76,7 +88,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
   };
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated, signIn, user }}>
+    <AuthContext.Provider value={{ isAuthenticated, signIn, signOut, user }}>
       {children}
     </AuthContext.Provider>
   );
