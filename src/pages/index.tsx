@@ -4,6 +4,7 @@ import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Input } from '../components/Form/Input';
 import { useAuth } from "../context/AuthContext";
+import { withSSRGuest } from "../utils/withSSRGuest";
 
 type SignInFormData = {
   email: string;
@@ -70,3 +71,9 @@ const SignIn = () => {
 }
 
 export default SignIn;
+
+export const getServerSideProps = withSSRGuest(async (ctx) => {
+  return {
+    props: {}
+  }
+});
