@@ -19,24 +19,43 @@ type User = {
 };
 
 interface AuthContextData {
-  signIn(credentials: SignInCredentials): Promise<void>;
-  signOut(): void;
+  signIn: (credentials: SignInCredentials) => Promise<void>;
+  signOut: () => void;
   isAuthenticated: boolean;
   user: User;
 };
+
+const AuthContext = createContext({} as AuthContextData);
+
+let authChannel: BroadcastChannel;
 
 export const signOut = () => {
   destroyCookie(undefined, 'goDash.token');
   destroyCookie(undefined, 'goDash.refreshToken');
 
+  authChannel.postMessage('signOut');
+
   Router.push('/');
 };
-
-const AuthContext = createContext({} as AuthContextData);
 
 export function AuthProvider({ children }: AuthProviderProps) {
   const [user, setUser] = useState<User>(null);
   const isAuthenticated = !!user;
+
+  useEffect(() => {
+    authChannel = new BroadcastChannel('auth');
+
+    authChannel.onmessage = message => {
+      switch (message.data) {
+        case 'signOut':
+          signOut();
+          break;
+
+        default:
+          break;
+      }
+    };
+  }, []);
 
   useEffect(() => {
     const { 'goDash.token': token } = parseCookies();
@@ -80,8 +99,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
       api.defaults.headers['Authorization'] = `Bearer ${token}`;
 
-      if (isAuthenticated) Router.push('/dashboard');
-
+      Router.push('/dashboard');
     } catch (err) {
       console.error(err);
     }
