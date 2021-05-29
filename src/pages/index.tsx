@@ -5,6 +5,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { Input } from '../components/Form/Input';
 import { useAuth } from "../context/AuthContext";
 import { withSSRGuest } from "../utils/withSSRGuest";
+import { useCallback } from "react";
 
 type SignInFormData = {
   email: string;
@@ -23,9 +24,9 @@ const SignIn = () => {
   });
   const { isSubmitting, errors } = formState;
 
-  const handleSignIn:SubmitHandler<SignInFormData> = async (values) => {
+  const handleSignIn:SubmitHandler<SignInFormData> = useCallback(async (values) => {
     await signIn(values);
-  };
+  }, []);
 
   return (
     <Flex w="100vw" h="100vh" align="center" justify="center">

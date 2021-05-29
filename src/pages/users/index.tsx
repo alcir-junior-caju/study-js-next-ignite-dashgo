@@ -1,6 +1,6 @@
 import { Box, Button, Checkbox, Flex, Heading, Icon, Link, Spinner, Table, Tbody, Td, Text, Th, Thead, Tr, useBreakpointValue } from "@chakra-ui/react";
 import NextLink from 'next/link';
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { RiAddLine, RiPencilLine, RiRefreshLine } from "react-icons/ri";
 import Header from "../../components/Header/Index";
 import Pagination from "../../components/Pagination/Index";
@@ -18,7 +18,7 @@ const UsersList = () => {
     lg: true
   });
 
-  const handlePrefetchUser = async (userId: string) => {
+  const handlePrefetchUser = useCallback(async (userId: string) => {
     await queryClient.prefetchQuery(['user', userId], async () => {
       const response = await fetch(`https://localhost:3000/api/users/${userId}`);
       const data = await response.json();
@@ -27,7 +27,7 @@ const UsersList = () => {
     }, {
       staleTime: 1000 * 60 * 10, // 10 minutes
     });
-  };
+  }, [queryClient]);
 
   return (
     <Box>

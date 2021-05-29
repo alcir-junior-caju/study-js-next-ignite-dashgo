@@ -1,4 +1,4 @@
-import { createContext, ReactNode, useContext, useEffect, useState } from "react";
+import { createContext, ReactNode, useCallback, useContext, useEffect, useState } from "react";
 import Router from 'next/router'
 import { destroyCookie, parseCookies, setCookie } from 'nookies';
 import { api } from "../services/apiClient";
@@ -73,7 +73,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
     }
   }, []);
 
-  const signIn = async ({ email, password }: SignInCredentials) => {
+  const signIn = useCallback(async ({ email, password }: SignInCredentials) => {
     try {
       const response = await api.post('/sessions', {
         email,
@@ -103,7 +103,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
     } catch (err) {
       console.error(err);
     }
-  };
+  }, [api, Router]);
 
   return (
     <AuthContext.Provider value={{ isAuthenticated, signIn, signOut, user }}>

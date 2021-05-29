@@ -1,4 +1,5 @@
 import { Box, Flex, SimpleGrid, Text } from "@chakra-ui/react";
+import { useMemo } from "react";
 import { Chart } from "../components/Chart";
 import Header from "../components/Header/Index"
 import Can from "../components/Permissions/Can";
@@ -32,6 +33,10 @@ const chartData = [
 ];
 
 const Dashboard = () => {
+  const data = useMemo(() => {
+    return chartData;
+  }, [chartData]);
+
   return (
     <Flex direction="column" h="100vh">
       <Header />
@@ -40,8 +45,8 @@ const Dashboard = () => {
         <Sidebar />
 
         <SimpleGrid flex={1} gap={4} minChildWidth="320px" align="flex-start">
-          {chartData.map(chart => (
-            <Can permissions={chart.permissions}>
+          {data.map(chart => (
+            <Can permissions={chart.permissions} key={chart.id}>
               <Box
                 p={[6, 8]}
                 bg="gray.800"

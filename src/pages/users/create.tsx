@@ -11,6 +11,7 @@ import Sidebar from "../../components/Sidebar/Index";
 import { queryClient } from "../../services/queryClient";
 import { useRouter } from "next/router";
 import { withSSRAuth } from "../../utils/withSSRAuth";
+import { useCallback } from "react";
 
 type CreateUserFormData = {
   name: string;
@@ -56,10 +57,10 @@ const CreateUser = () => {
   });
   const { isSubmitting, errors } = formState;
 
-  const handleCreateUser:SubmitHandler<CreateUserFormData> = async (values) => {
+  const handleCreateUser:SubmitHandler<CreateUserFormData> = useCallback(async (values) => {
     await createUser.mutateAsync(values);
     router.push('/users');
-  };
+  }, [createUser, router]);
 
   return (
     <Box>
