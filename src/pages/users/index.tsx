@@ -7,6 +7,7 @@ import Pagination from "../../components/Pagination/Index";
 import Sidebar from "../../components/Sidebar/Index";
 import useUsers from "../../services/hooks/useUsers";
 import { queryClient } from "../../services/queryClient";
+import { withSSRAuth } from "../../utils/withSSRAuth";
 
 const UsersList = () => {
   const [page, setPage] = useState(1);
@@ -143,3 +144,12 @@ const UsersList = () => {
 };
 
 export default UsersList;
+
+export const getServerSideProps = withSSRAuth(async ctx => {
+  return {
+    props: {}
+  }
+}, {
+  permissions: ['metrics.list'],
+  roles: ['administrator']
+});

@@ -10,6 +10,7 @@ import Header from "../../components/Header/Index";
 import Sidebar from "../../components/Sidebar/Index";
 import { queryClient } from "../../services/queryClient";
 import { useRouter } from "next/router";
+import { withSSRAuth } from "../../utils/withSSRAuth";
 
 type CreateUserFormData = {
   name: string;
@@ -129,3 +130,9 @@ const CreateUser = () => {
 };
 
 export default CreateUser;
+
+export const getServerSideProps = withSSRAuth(ctx => {
+  return {
+    props: {}
+  }
+});
