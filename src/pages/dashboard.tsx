@@ -1,9 +1,9 @@
 import { Box, Flex, SimpleGrid, Text } from "@chakra-ui/react";
 import { useMemo } from "react";
 import { Chart } from "../components/Chart";
-import Header from "../components/Header/Index"
-import Can from "../components/Permissions/Can";
-import Sidebar from "../components/Sidebar/Index";
+import { Header } from "../components/Header/Index"
+import { Can } from "../components/Permissions/Can";
+import { Sidebar } from "../components/Sidebar/Index";
 import { setupAPIClient } from "../services/api";
 import { withSSRAuth } from "../utils/withSSRAuth";
 

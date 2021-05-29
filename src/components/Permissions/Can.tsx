@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import { memo, ReactNode } from "react";
 import { useCan } from "../../hooks/useCan";
 
 interface CanProps {
@@ -7,7 +7,7 @@ interface CanProps {
   roles?: string[];
 };
 
-const Can = ({ children, permissions, roles }: CanProps) => {
+const CanComponent = ({ children, permissions, roles }: CanProps) => {
   const userCanSeeComponent = useCan({ permissions, roles });
 
   if (!userCanSeeComponent) return null;
@@ -19,4 +19,4 @@ const Can = ({ children, permissions, roles }: CanProps) => {
   );
 };
 
-export default Can;
+export const Can = memo(CanComponent);

@@ -1,12 +1,12 @@
 import { Box, Stack, Text } from "@chakra-ui/react";
-import { ReactNode } from "react";
+import { memo, ReactNode } from "react";
 
 interface NavSectionProps {
   title: string;
   children: ReactNode;
 }
 
-const NavSection = ({ title, children}: NavSectionProps) => {
+const NavSectionComponent = ({ title, children}: NavSectionProps) => {
   return (
     <Box>
       <Text
@@ -25,4 +25,4 @@ const NavSection = ({ title, children}: NavSectionProps) => {
   );
 };
 
-export default NavSection;
+export const NavSection = memo(NavSectionComponent);

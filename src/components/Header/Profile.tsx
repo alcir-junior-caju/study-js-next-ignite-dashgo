@@ -1,11 +1,30 @@
-import { Avatar, Box, Flex, Text } from "@chakra-ui/react";
+import { Avatar as AvatarChakra, Box, Flex, Text } from "@chakra-ui/react";
+import { memo } from "react";
 import { useAuth } from "../../context/AuthContext";
 
 interface ProfileProps {
   showProfileData?: boolean;
 }
 
-const Profile = ({ showProfileData = true }: ProfileProps) => {
+interface AvatarProps {
+  size: string;
+  name: string;
+  background: string;
+  src: string;
+};
+
+const Avatar = memo(({ size, name, background, src }: AvatarProps) => {
+  return (
+    <AvatarChakra
+      size={size}
+      name={name}
+      background={background}
+      src={src}
+    />
+  );
+});
+
+const ProfileComponent = ({ showProfileData = true }: ProfileProps) => {
   const { user } = useAuth();
 
   return (
@@ -27,4 +46,4 @@ const Profile = ({ showProfileData = true }: ProfileProps) => {
   );
 };
 
-export default Profile;
+export const Profile = memo(ProfileComponent);

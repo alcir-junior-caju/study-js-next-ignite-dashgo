@@ -1,5 +1,6 @@
-import { Box, Button, HStack, Text } from "@chakra-ui/react";
-import PaginationItem from "./PaginationItem";
+import { Box, HStack, Text } from "@chakra-ui/react";
+import { memo } from "react";
+import { PaginationItem } from "./PaginationItem";
 
 interface PaginationProps {
   totalCountOfRegisters: number;
@@ -18,7 +19,7 @@ const generatePagesArray = (from: number, to: number) => {
     .filter(page => page > 0);
 };
 
-const Pagination = ({
+const PaginationComponent = ({
   totalCountOfRegisters,
   registersPerPage = 10,
   currentPage = 1,
@@ -71,4 +72,4 @@ const Pagination = ({
   );
 };
 
-export default Pagination;
+export const Pagination = memo(PaginationComponent);

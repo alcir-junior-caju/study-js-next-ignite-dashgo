@@ -1,6 +1,7 @@
 import { Text } from "@chakra-ui/react";
+import { memo } from "react";
 
-const Logo = () => {
+const LogoComponent = () => {
   return (
     <Text fontSize={['2xl', '3xl']} fontWeight="bold" letterSpacing="tight" w={64}>
       dashGo
@@ -9,4 +10,4 @@ const Logo = () => {
   );
 };
 
-export default Logo;
+export const Logo = memo(LogoComponent);

@@ -1,4 +1,5 @@
 import { Button } from "@chakra-ui/react";
+import { memo } from "react";
 
 interface PaginationItemProps {
   number: number;
@@ -6,7 +7,7 @@ interface PaginationItemProps {
   onPageChange: (page: number) => void;
 }
 
-const PaginationItem = ({ isCurrent = false, number, onPageChange }: PaginationItemProps) => {
+const PaginationItemComponent = ({ isCurrent = false, number, onPageChange }: PaginationItemProps) => {
   if (isCurrent) {
     return (
       <Button
@@ -37,4 +38,4 @@ const PaginationItem = ({ isCurrent = false, number, onPageChange }: PaginationI
   );
 };
 
-export default PaginationItem;
+export const PaginationItem = memo(PaginationItemComponent);

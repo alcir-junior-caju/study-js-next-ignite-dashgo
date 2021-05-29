@@ -2,9 +2,9 @@ import { Box, Button, Checkbox, Flex, Heading, Icon, Link, Spinner, Table, Tbody
 import NextLink from 'next/link';
 import { useCallback, useState } from "react";
 import { RiAddLine, RiPencilLine, RiRefreshLine } from "react-icons/ri";
-import Header from "../../components/Header/Index";
-import Pagination from "../../components/Pagination/Index";
-import Sidebar from "../../components/Sidebar/Index";
+import { Header } from "../../components/Header/Index";
+import { Pagination } from "../../components/Pagination/Index";
+import { Sidebar } from "../../components/Sidebar/Index";
 import useUsers from "../../services/hooks/useUsers";
 import { queryClient } from "../../services/queryClient";
 import { withSSRAuth } from "../../utils/withSSRAuth";

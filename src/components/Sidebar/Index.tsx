@@ -1,7 +1,8 @@
 import { Box, Drawer, DrawerBody, DrawerCloseButton, DrawerContent, DrawerHeader, DrawerOverlay, useBreakpointValue } from "@chakra-ui/react";
+import { memo } from "react";
 import { RiContactsLine, RiDashboardLine, RiGitMergeLine, RiInputMethodLine } from "react-icons/ri";
 import { useSidebarDrawer } from "../../context/SidebarDrawerContext";
-import SidebarNav from "./SidebarNav";
+import { SidebarNav } from "./SidebarNav";
 
 const dataMenu = [
   {
@@ -42,7 +43,7 @@ const dataMenu = [
   }
 ];
 
-const Sidebar = () => {
+const SidebarComponent = () => {
   const { isOpen, onClose } = useSidebarDrawer();
   const isDrawerSidebar = useBreakpointValue({
     base: true,
@@ -73,4 +74,4 @@ const Sidebar = () => {
   );
 };
 
-export default Sidebar;
+export const Sidebar = memo(SidebarComponent);

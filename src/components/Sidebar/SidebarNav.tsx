@@ -1,7 +1,7 @@
 import { Stack } from "@chakra-ui/react";
-import { ElementType } from "react";
-import NavLink from "./NavLink";
-import NavSection from "./NavSection";
+import { ElementType, memo } from "react";
+import { NavLink } from "./NavLink";
+import { NavSection } from "./NavSection";
 
 type menus = {
   id: number;
@@ -20,7 +20,7 @@ interface SidebarProps {
   dataMenu: dataMenu[];
 };
 
-const SidebarNav = ({ dataMenu }: SidebarProps) => {
+const SidebarNavComponent = ({ dataMenu }: SidebarProps) => {
   return (
     <Stack spacing={12} align="flex-start">
       {dataMenu.map(section => (
@@ -34,4 +34,4 @@ const SidebarNav = ({ dataMenu }: SidebarProps) => {
   );
 };
 
-export default SidebarNav;
+export const SidebarNav = memo(SidebarNavComponent);

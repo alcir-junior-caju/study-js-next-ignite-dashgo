@@ -1,8 +1,9 @@
 import { HStack, Icon } from "@chakra-ui/react";
+import { memo } from "react";
 import { RiLogoutCircleLine, RiNotificationLine, RiUserAddLine } from "react-icons/ri";
 import { useAuth } from "../../context/AuthContext";
 
-const NotificationsNav = () => {
+const NotificationsNavComponent = () => {
   const { signOut } = useAuth();
 
   return (
@@ -22,4 +23,4 @@ const NotificationsNav = () => {
   );
 };
 
-export default NotificationsNav;
+export const NotificationsNav = memo(NotificationsNavComponent);

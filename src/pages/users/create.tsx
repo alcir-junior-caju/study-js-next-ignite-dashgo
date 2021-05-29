@@ -6,8 +6,8 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { useMutation } from 'react-query';
 
 import { Input } from "../../components/Form/Input";
-import Header from "../../components/Header/Index";
-import Sidebar from "../../components/Sidebar/Index";
+import { Header } from "../../components/Header/Index";
+import { Sidebar } from "../../components/Sidebar/Index";
 import { queryClient } from "../../services/queryClient";
 import { useRouter } from "next/router";
 import { withSSRAuth } from "../../utils/withSSRAuth";

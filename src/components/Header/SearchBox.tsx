@@ -1,7 +1,8 @@
 import { Flex, Icon, Input } from "@chakra-ui/react";
+import { memo } from "react";
 import { RiSearchLine } from "react-icons/ri";
 
-const SearchBox = () => {
+const SearchBoxComponent = () => {
   return (
     <Flex
       as="label"
@@ -29,4 +30,4 @@ const SearchBox = () => {
   );
 };
 
-export default SearchBox;
+export const SearchBox = memo(SearchBoxComponent);
